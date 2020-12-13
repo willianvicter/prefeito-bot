@@ -1,9 +1,10 @@
 // Nome de usuário do perfil
-let usuario = 'pref_itapina'
+let usuario = 'krausebot'
 
 // Importação da biblioteca.
 let Twit = require('twit');
 require('dotenv').config();
+var schedule = require('node-schedule');
 
 // Importa os arquivos com as frases
 const frases = require("./frases.json");
@@ -116,7 +117,17 @@ function tweetEvent(eventMsg) {
 
 }
 
+// Aqui onde a mágica acontece
 
 //Tempo do publicação do Twitter
 //setInterval(twittar, 60*60*6000); //Setado para 6h
 //twittar();
+
+let rule = new schedule.RecurrenceRule();
+
+rule.hour = [11, 13, 14, 15, 17, 19, 21, 23];
+rule.minute = 0;
+
+let event = schedule.scheduleJob(rule, function(){
+	twittar();
+});
