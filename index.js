@@ -49,7 +49,7 @@ function getSaudacao() {
 	var hoje = new Date;
 	horas = hoje.getHours();
 
-	if (horas >= 0 && horas < 12) {
+	if (horas >= 4 && horas < 12) {
 		return "Bom dia! ";
 	}
 	else if (horas >= 12 && horas < 18) {
@@ -115,7 +115,7 @@ function tweetEvent(eventMsg) {
 
 let rule = new schedule.RecurrenceRule();
 
-rule.hour = [11, 13, 15, 17, 19, 21, 23];
+rule.hour = [3, 6, 9, 12, 15, 18, 21, 24];
 rule.minute = 0;
 
 let event = schedule.scheduleJob(rule, function(){
