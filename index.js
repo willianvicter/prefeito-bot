@@ -1,10 +1,16 @@
+// Nome de usuário do perfil
+let usuario = 'pref_itapina'
+
 // Importação da biblioteca.
 let Twit = require('twit');
 require('dotenv').config();
+var schedule = require('node-schedule');
+
+// Importa os arquivos com as frases
 const frases = require("./frases.json");
 //const respostas = require("./repostas.json");
 
-//Criação do objeto com as keys.
+// Criação do objeto com as keys.
 var bot = new Twit({
 	consumer_key: process.env.CONSUMER_KEY,
 	consumer_secret: process.env.CONSUMER_SECRET,
@@ -12,95 +18,106 @@ var bot = new Twit({
 	access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-//Criação do twitter
-function twittar(){
+// Configura a Stream e chama a função tweetEvent() quando mencionado
+var stream = bot.stream('statuses/filter', { track: '@' + usuario });
+stream.on('tweet', tweetEvent);
+
+//Criação do tweet
+function twittar() {
 	// formatação da mensagem(que é pegar a saudação mas a randommsg da função).
+
+	let msg = getSaudacao() + randommsg();
+
 	var mensagem = {
-		status: randommsg()
+		status: msg
 	};
-	
+
 	//chamando a função para postar
 	bot.post('statuses/update', mensagem, feedback);
-	
+
 	//função que será executada depois do bot postar
-	function feedback(error, response, mensagem, horas){
-		console.log("Twitter publicado: "+mensagem);
-		console.log("Saudação apresentada: "+saudaçao);
+	function feedback(error, response, mensagem, horas) {
+		console.log("Twitter publicado: " + mensagem);
+		console.log("Saudação apresentada: " + getSaudacao());
 		console.log(error);
 	}
 }
 
-//Função responsável por gerar mensagem aleatória.
-function randommsg(){
-	//Verifica o horário do dia para saudar as pessoas.
+// Função que verifica o horário do dia para saudar as pessoas.
+function getSaudacao() {
+
 	var hoje = new Date;
 	horas = hoje.getHours();
-	saudaçao = "";
-	if (horas >= 0 && horas < 12){
-		saudaçao = "Bom dia! ";
+
+	if (horas >= 0 && horas < 12) {
+		return "Bom dia! ";
 	}
-	else if (horas >= 12 && horas < 18){
-		saudaçao = "Boa tarde! ";
+	else if (horas >= 12 && horas < 18) {
+		return "Boa tarde! ";
 	}
-	else{
-		saudaçao = "Boa noite! ";
+	else {
+		return "Boa noite! ";
 	}
-	
-	//Aqui embaixo acontecerá a mágica do bot gerar as frases aleatórias.
-	var i = Math.floor((Math.random() * (frases.prefixo.length-1)) + 0); //Random do Prefixo
-	var k = Math.floor((Math.random() * (frases.sufixo.length-1)) + 0); //Random do Sufixo
-	//var i = frases.prefixo.length;
-	//var k = frases.sufixo.length;
-	return saudaçao+frases.prefixo[i]+frases.sufixo[k];
+
 }
 
-function gerarTeste(){
-	for(var i = 0; i < 100; i++){
+// Função responsável por gerar mensagem aleatória.
+function randommsg() {
+	//Aqui embaixo acontecerá a mágica do bot gerar as frases aleatórias.
+	var i = Math.floor((Math.random() * (frases.prefixo.length - 1)) + 0); //Random do Prefixo
+	var k = Math.floor((Math.random() * (frases.sufixo.length - 1)) + 0); //Random do Sufixo
+	//var i = frases.prefixo.length;
+	//var k = frases.sufixo.length;
+	return frases.prefixo[i] + frases.sufixo[k];
+}
+
+function gerarTeste() {
+	for (var i = 0; i < 100; i++) {
 		console.log(randommsg());
 	};
 }
-/*
-var stream = bot.stream('user');
-stream.on('tweet', tweetEvent);
 
-function tweetEvent(tweet) {
-    // Who is this in reply to?
-    var reply_to = tweet.in_reply_to_screen_name;
-    // Who sent the tweet?
-    var name = tweet.user.screen_name;
-    // What is the text?
-    var txt = tweet.text;
-    // If we want the conversation thread
-    var id = tweet.id_str;
+function tweetEvent(eventMsg) {
 
-    // Ok, if this was in reply to me
-    // Tweets by me show up here too
-    if (reply_to === 'pref_itapina') {
+	// Para quem mandar o tweet?
+	var name = eventMsg.user.screen_name;
 
-      // Get rid of the @ mention
-      txt = txt.replace(/@pref_itapina/g,'');
+	// A thread da conversa
+	var id = eventMsg.id_str;
 
-      // Start a reply back to the sender
-      var replyText = '@'+name + ' ';
-      // Reverse their text
-      for (var i = txt.length-1; i >= 0; i--) {
-        replyText += txt.charAt(i);
-      }
+	console.log('tweet recebido de outra conta: ', name);
 
-      // Post that tweet
-      T.post('statuses/update', { status: replyText, in_reply_to_status_id: id}, tweeted);
+	// Adicina a menção
+	var replyText = '@' + name + ' ';
 
-      // Make sure it worked!
-      function tweeted(err, reply) {
-        if (err) {
-          console.log(err.message);
-        } else {
-          console.log('Tweeted: ' + reply.text);
-        }
-      }
-    }
-}*/
+	// Adicina a saudação com o user e o texto
+	replyText += name + ', ' + getSaudacao().toLowerCase() + randommsg();
+
+	// Faz o tweet
+	bot.post('statuses/update', { status: replyText, in_reply_to_status_id: id }, tweeted);
+
+	// Confirma se tudo está funcionando!
+	function tweeted(err, reply) {
+		if (err) {
+			console.log(err.message);
+		} else {
+			console.log('Tweeted: ' + reply.text);
+		}
+	}
+
+}
+
+// Aqui onde a mágica acontece
 
 //Tempo do publicação do Twitter
 //setInterval(twittar, 60*60*6000); //Setado para 6h
-twittar();
+//twittar();
+
+let rule = new schedule.RecurrenceRule();
+
+rule.hour = [11, 13, 15, 17, 19, 21, 23];
+rule.minute = 0;
+
+let event = schedule.scheduleJob(rule, function(){
+	twittar();
+});
