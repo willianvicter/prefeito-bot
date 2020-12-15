@@ -1,5 +1,5 @@
 {
-	"prefixo":[
+	"prefixo": [
 		"Hoje foi dia ",
 		"Não posso deixar ",
 		"Semana que vem marquei ",
@@ -26,7 +26,7 @@
 		"Quer saber de uma coisa? Quem vocês pensam que são para não gostar ",
 		"Se a vida fosse difícil eu odiaria "
 	],
-	"sufixo":[
+	"sufixo": [
 		"de comer aquela feijoada!",
 		"de ir na feira para ver o que tinha de bom!",
 		"de contar mentira para nossos eleitores, e claro rancar bons e velhos sorrisos!",
@@ -65,5 +65,53 @@
 		"de ir lá na fábrica de rapadura, só pra ver a produção!",
 		"de pobre.",
 		"de rico."
+	],
+	"molde": {
+		"inicio": [
+			"Acabei de $verbo $sujeito $adjetivo.",
+			"Saindo da prefeitura, $verbo foi demais!"
+		],
+		"fim": [
+			"Tentei várias coisas, mas o que resolveu tudo foi $verbo $sujeito.",
+			"Só em Itapina mesmo pra aparecer $sujeito tão sensacional!"
+		]
+	},
+	"verbo": [
+		"avistar",
+		"ajudar",
+		"roubar",
+		"morder",
+		"trair",
+		"cuspir",
+		"alegrar",
+		"intermediar",
+		"decepcionar",
+		"criticar",
+		"celebrar"
+	],
+	"sujeito": [
+		"uma senhora",
+		"um vereador",
+		"um governador",
+		"um morador",
+		"um transeunte",
+		"a dona do bar",
+		"o cara da loja de ferramentas",
+		"o tio da balsa",
+		"o padre",
+		"um produtor rural",
+		"o secretário"
+	],
+	"adjetivo": [
+		"sem máscara",
+		"ilegal",
+		"ideal",
+		"jovem",
+		"narcisista",
+		"ignorante",
+		"desleal",
+		"brilhante",
+		"transparente",
+		"persistente"
 	]
 }

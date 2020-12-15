@@ -22,6 +22,15 @@ var bot = new Twit({
 var stream = bot.stream('statuses/filter', { track: '@' + usuario });
 stream.on('tweet', tweetEvent);
 
+// Modelos de Frases
+let modelo = [
+	["ambientacao", "amb_complemento", "acao", "coisa", "sinal", "conclusao"],
+	["ambientacao", "acao", "coisa", "lugar", "sinal"],
+	["ambientacao", "condicao", "conclusao"],
+	["coisa", ",", "ambientacao", "coisa_apontar", "quer", "acao", "coisa_apontar", "sinal"],
+	["condicao", "conclusao"]
+];
+
 //Criação do tweet
 function twittar() {
 	// formatação da mensagem(que é pegar a saudação mas a randommsg da função).
@@ -63,16 +72,39 @@ function getSaudacao() {
 
 // Função responsável por gerar mensagem aleatória.
 function randommsg() {
-	//Aqui embaixo acontecerá a mágica do bot gerar as frases aleatórias.
-	var i = Math.floor((Math.random() * (frases.prefixo.length - 1)) + 0); //Random do Prefixo
-	var k = Math.floor((Math.random() * (frases.sufixo.length - 1)) + 0); //Random do Sufixo
-	//var i = frases.prefixo.length;
-	//var k = frases.sufixo.length;
-	return frases.prefixo[i] + frases.sufixo[k];
+
+	let msg = getSaudacao();
+	let verbo, sujeito, adjetivo;
+
+	function gerarPartes() {
+		verbo = frases.verbo[Math.floor(Math.random() * frases.verbo.length)];
+		sujeito = frases.sujeito[Math.floor(Math.random() * frases.sujeito.length)];
+		adjetivo = frases.adjetivo[Math.floor(Math.random() * frases.adjetivo.length)];
+	}
+	
+	let inicio = frases.molde.inicio[Math.floor(Math.random() * frases.molde.inicio.length)];
+	let fim = frases.molde.fim[Math.floor(Math.random() * frases.molde.fim.length)];
+
+	// Substituir placeholders do inicio pelos atuais verbos, sujeitos e adjetivos
+	gerarPartes();
+	inicio = inicio.replace("$verbo", verbo);
+	inicio = inicio.replace("$sujeito", sujeito);
+	inicio = inicio.replace("$adjetivo", adjetivo);
+
+	// Substituir placeholders do fim pelos atuais verbos, sujeitos e adjetivos
+	gerarPartes();
+	fim = fim.replace("$verbo", verbo);
+	fim = fim.replace("$sujeito", sujeito);
+	fim = fim.replace("$adjetivo", adjetivo);
+
+	msg += inicio + " " + fim;
+
+	return msg;
+
 }
 
 function gerarTeste() {
-	for (var i = 0; i < 100; i++) {
+	for (var i = 0; i < 10; i++) {
 		console.log(randommsg());
 	};
 }
@@ -109,9 +141,7 @@ function tweetEvent(eventMsg) {
 
 // Aqui onde a mágica acontece
 
-//Tempo do publicação do Twitter
-//setInterval(twittar, 60*60*6000); //Setado para 6h
-//twittar();
+// gerarTeste();
 
 let rule = new schedule.RecurrenceRule();
 
