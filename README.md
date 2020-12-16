@@ -23,7 +23,7 @@ Execute com:
 
 `node index.js`
 
-## Sujestão de frases
+## Sugerir frases
 
 Atualmente, ainda não temos um formulário para envio de sugestões, mas você pode
 criar uma issue :) 
