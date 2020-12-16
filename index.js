@@ -8,7 +8,6 @@ var schedule = require('node-schedule');
 
 // Importa os arquivos com as frases
 const frases = require("./frases.json");
-//const respostas = require("./repostas.json");
 
 // Criação do objeto com as keys.
 var bot = new Twit({
@@ -49,10 +48,10 @@ function getSaudacao() {
 	var hoje = new Date;
 	horas = hoje.getHours();
 
-	if (horas >= 4 && horas < 12) {
+	if (horas >= 7 && horas < 15) {
 		return "Bom dia! ";
 	}
-	else if (horas >= 12 && horas < 18) {
+	else if (horas >= 15 && horas < 21) {
 		return "Boa tarde! ";
 	}
 	else {
@@ -66,15 +65,16 @@ function randommsg() {
 	//Aqui embaixo acontecerá a mágica do bot gerar as frases aleatórias.
 	var i = Math.floor((Math.random() * (frases.prefixo.length - 1)) + 0); //Random do Prefixo
 	var k = Math.floor((Math.random() * (frases.sufixo.length - 1)) + 0); //Random do Sufixo
-	//var i = frases.prefixo.length;
-	//var k = frases.sufixo.length;
 	return frases.prefixo[i] + frases.sufixo[k];
 }
 
 function gerarTeste() {
-	for (var i = 0; i < 100; i++) {
+	/*for (var i = 0; i < 100; i++) {
 		console.log(randommsg());
-	};
+	};*/
+	/*for (var i = 0; i < 100; i++) {
+		console.log(getSaudacao().toLowerCase() + frases.respostas[Math.floor(Math.random() * (frases.respostas.length - 1))]);
+	};*/
 }
 
 function tweetEvent(eventMsg) {
@@ -91,7 +91,7 @@ function tweetEvent(eventMsg) {
 	var replyText = '@' + name + ' ';
 
 	// Adicina a saudação com o user e o texto
-	replyText += name + ', ' + getSaudacao().toLowerCase() + randommsg();
+	replyText += name + ', ' + frases.respostas[Math.floor(Math.random() * (frases.respostas.length - 1))];
 
 	// Faz o tweet
 	bot.post('statuses/update', { status: replyText, in_reply_to_status_id: id }, tweeted);
@@ -106,12 +106,6 @@ function tweetEvent(eventMsg) {
 	}
 
 }
-
-// Aqui onde a mágica acontece
-
-//Tempo do publicação do Twitter
-//setInterval(twittar, 60*60*6000); //Setado para 6h
-//twittar();
 
 let rule = new schedule.RecurrenceRule();
 
