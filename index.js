@@ -109,45 +109,49 @@ function tweetEvent(eventMsg) {
 
 }
 
+function postMencaoElogiosa(user) {
 
-// obtem os dados do suário informado e passa como parâmetro para o post da Menção
-bot.get('users/show', { screen_name: 'ratosbot' }, (err, data) => { postMencao(data) });
+    // obtem os dados do suário informado e passa como parâmetro para o post da Menção
+    bot.get('users/show', { screen_name: user }, (err, data) => { postMencao(data) });
 
-async function postMencao(data) {
+    async function postMencao(data) {
 
-    let name = data.screen_name;
+        let name = data.screen_name;
 
-    // espera para a imagem ser gerada
-    await image.generate.mencaoElogiosa(data);
+        // espera para a imagem ser gerada
+        await image.generate.mencaoElogiosa(data);
 
-    // após a imagem gerada, lê do arquivo
-    let b64content = fs.readFileSync('output-img/output.png', { encoding: 'base64' });
+        // após a imagem gerada, lê do arquivo
+        let b64content = fs.readFileSync('output-img/output.png', { encoding: 'base64' });
 
-    // faz o upload e posta com a legenda
-    bot.post('media/upload', { media_data: b64content }, (err, data, response) => {
-        let status = "Você merece, " + name + "! #itapina";
-        let mediaIdStr = data.media_id_string;
-        let meta_params = { media_id: mediaIdStr };
+        // faz o upload e posta com a legenda
+        bot.post('media/upload', { media_data: b64content }, (err, data, response) => {
+            let status = "Você merece, " + name + "! #itapina";
+            let mediaIdStr = data.media_id_string;
+            let meta_params = { media_id: mediaIdStr };
 
-        bot.post('media/metadata/create', meta_params, (err, data, response) => {
-            if (!err) {
-                let params = { status: status, media_ids: [mediaIdStr] }
+            bot.post('media/metadata/create', meta_params, (err, data, response) => {
+                if (!err) {
+                    let params = { status: status, media_ids: [mediaIdStr] }
 
-                bot.post('statuses/update', params, (err, data) => {
-                    console.log("Tweet com mídia postado: @" + name);
-                });
-            }
+                    bot.post('statuses/update', params, (err, data) => {
+                        console.log("Tweet com mídia postado: @" + name);
+                    });
+                }
+            });
+
         });
 
-    });
+    }
 
 }
 
-// let rule = new schedule.RecurrenceRule();
+// Aqui começa tudo
+let rule = new schedule.RecurrenceRule();
 
-// rule.hour = [3, 6, 9, 12, 15, 18, 21, 24];
-// rule.minute = 0;
+rule.hour = [3, 6, 9, 12, 15, 18, 21, 24];
+rule.minute = 0;
 
-// let event = schedule.scheduleJob(rule, function() {
-//     twittar();
-// })
+let event = schedule.scheduleJob(rule, function() {
+    twittar();
+})
