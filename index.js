@@ -30,7 +30,9 @@ function twittar() {
     // formatação da mensagem(que é pegar a saudação mas a randommsg da função).
 
     let msg = getSaudacao() + randommsg();
-
+    /*for (var i = 0; i < 100; i++) {
+    	console.log(getSaudacao().toLowerCase() + frases.respostas[Math.floor(Math.random() * (frases.respostas.length - 1))]);
+    };*/
     var mensagem = {
         status: msg
     };
@@ -71,15 +73,62 @@ function randommsg() {
 }
 
 function gerarTeste() {
-    /*for (var i = 0; i < 100; i++) {
-    	console.log(randommsg());
-    };*/
-    /*for (var i = 0; i < 100; i++) {
-    	console.log(getSaudacao().toLowerCase() + frases.respostas[Math.floor(Math.random() * (frases.respostas.length - 1))]);
-    };*/
+    for (var i = 0; i < 100; i++) {
+        console.log(randommsg());
+    };
 }
 
-function tweetEvent(eventMsg) {
+function postMencaoElogiosa(eventMsg) {
+
+    // Para quem mandar o tweet?
+    let user = eventMsg.user.screen_name;
+
+    // Id da conversa
+    let id = eventMsg.id_str;
+
+    // obtem os dados do suário informado e passa como parâmetro para o post da Menção
+    bot.get('users/show', { screen_name: user }, (err, data) => { postMencao(data, id) });
+
+    async function postMencao(data, id_answ) {
+
+        // Consegue o nome do usuário
+        let name = data.screen_name;
+
+        // espera para a imagem ser gerada
+        await image.generate.mencaoElogiosa(data);
+
+        // após a imagem gerada, lê do arquivo
+        let b64content = fs.readFileSync('output-img/output.png', { encoding: 'base64' });
+
+        // faz o upload e posta com a legenda
+        bot.post('media/upload', { media_data: b64content }, (err, data, response) => {
+            let status = "@" + name + " Você merece, " + name + "! #itapina";
+            let mediaIdStr = data.media_id_string;
+            let meta_params = { media_id: mediaIdStr };
+
+            bot.post('media/metadata/create', meta_params, (err, data, response) => {
+                if (!err) {
+                    let params = {
+                        status: status,
+                        in_reply_to_status_id: id_answ,
+                        media_ids: [mediaIdStr],
+                        lat: -19.534181234087324,
+                        long: -40.81335561845036
+                    }
+
+                    bot.post('statuses/update', params, (err, data) => {
+                        console.log("Tweeted: Tweet com mídia postado em resposta a " + name);
+                    });
+                }
+            });
+
+        });
+
+    }
+
+}
+
+function postRespostaSimples(eventMsg) {
 
     // Para quem mandar o tweet?
     var name = eventMsg.user.screen_name;
@@ -96,7 +145,13 @@ function tweetEvent(eventMsg) {
     replyText += name + ', ' + frases.respostas[Math.floor(Math.random() * (frases.respostas.length - 1))];
 
     // Faz o tweet
-    bot.post('statuses/update', { status: replyText, in_reply_to_status_id: id }, tweeted);
+    let params = {
+        status: replyText,
+        in_reply_to_status_id: id,
+        lat: -19.534181234087324,
+        long: -40.81335561845036
+    }
+    bot.post('statuses/update', params, tweeted);
 
     // Confirma se tudo está funcionando!
     function tweeted(err, reply) {
@@ -109,40 +164,30 @@ function tweetEvent(eventMsg) {
 
 }
 
-function postMencaoElogiosa(user) {
+// Lida com o evento de marcação
+function tweetEvent(eventMsg) {
 
-    // obtem os dados do suário informado e passa como parâmetro para o post da Menção
-    bot.get('users/show', { screen_name: user }, (err, data) => { postMencao(data) });
+    let situacao = [
+        "simples",
+        "mencaoElogiosa"
+    ];
+    let chances = [
+        95,
+        5
+    ];
 
-    async function postMencao(data) {
+    let sorteio = [];
 
-        let name = data.screen_name;
-
-        // espera para a imagem ser gerada
-        await image.generate.mencaoElogiosa(data);
-
-        // após a imagem gerada, lê do arquivo
-        let b64content = fs.readFileSync('output-img/output.png', { encoding: 'base64' });
-
-        // faz o upload e posta com a legenda
-        bot.post('media/upload', { media_data: b64content }, (err, data, response) => {
-            let status = "Você merece, " + name + "! #itapina";
-            let mediaIdStr = data.media_id_string;
-            let meta_params = { media_id: mediaIdStr };
-
-            bot.post('media/metadata/create', meta_params, (err, data, response) => {
-                if (!err) {
-                    let params = { status: status, media_ids: [mediaIdStr] }
-
-                    bot.post('statuses/update', params, (err, data) => {
-                        console.log("Tweet com mídia postado: @" + name);
-                    });
-                }
-            });
-
-        });
-
+    for (let i = 0; i < chances.length; i++) {
+        for (let j = 0; j < chances[i]; j++) {
+            sorteio.push(situacao[i]);
+        }
     }
+
+    let sorteado = sorteio[Math.floor(Math.random() * sorteio.length)];
+
+    if (sorteado == "simples") postRespostaSimples(eventMsg);
+    else if (sorteado == "mencaoElogiosa") postMencaoElogiosa(eventMsg);
 
 }
 
