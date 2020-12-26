@@ -31,8 +31,32 @@
         "Doente de amor! Procurei remédio depois ",
         "Joelma canta demais! Escuto sempre antes ",
         "Sou um verdadeiro diplomata! Conversei com o prefeito de Baixo Guandu, falei sobre as dificuldades ",
-        "Conversei com o prefeito de Colatina, ele disse que ia parar "
-
+        "Conversei com o prefeito de Colatina, ele disse que ia parar ",
+        "Nova obra saindo! mas não antes ",
+        "Vocês não acreditariam... Tava saindo da prefeitura e lembrei da falta ",
+        "Quebrou um cano de água aqui na minha sala! Mas só vou ver isso depois ",
+        "Encontrei dois eleitores na balsa! Avisei pra lembrar ",
+        "Caiu um galho na minha cabeça, vou demolir tudo antes ",
+        "Ouvindo só música boa! Doente ",
+        "Fui na missa e nao deixei ",
+        "Alguem me ajuda! Estou mal depois ",
+        "Nesse horário, lá em Itapina, é a hora ",
+        "Medo ",
+        "Instalei caixas de som pra tocar brega na prefeitura! Chorei ",
+        "Algum idiota instalou Baidu nos PCs da prefeitura! Nem posso mais pensar ",
+        "Coloquei um pão pra assar, alguém me lembra ",
+        "Kkk o secretario esqueceu ",
+        "Server de Minecraft da Prefeitura! Vou passar o IP depois ",
+        "@Bielbixcoiteiro lembra de me pagar o Fiat Uno! Posso nem pensar da saudade que tenho",
+        "@Bielbixcoiteiro lembra de me pagar a reforma da sua rua! E não esquece ",
+        "@Bielbixcoiteiro lembra de me pagar a carona! Quase esqueci ",
+        "@matekrause lembra de me pagar o Fiat Uno! Posso nem pensar da saudade que tenho",
+        "@matekrause lembra de me pagar a reforma da sua rua! E não esquece ",
+        "@matekrause lembra de me pagar a carona! Quase esqueci ",
+        "@MarcusLievore lembra de me pagar o Fiat Uno! Posso nem pensar da saudade que tenho",
+        "@MarcusLievore lembra de me pagar a reforma da sua rua! E não esquece ",
+        "@MarcusLievore lembra de me pagar a carona! Quase esqueci ",
+        "O secretário bateu o Fiat Uno! Desgraça! a gente tava "
     ],
     "sufixo": [
         "de comer aquela feijoada!",
@@ -75,7 +99,7 @@
         "de rico.",
         "de tropeçar na pedra em frente da igreja.",
         "de comprar no Posto de Medicamentos Rossmann! ",
-        "Absurdo!",
+        "desse absurdo!",
         "de beber todas no bar do Toba!",
         "de dançar demais na festa junina do ano passado.",
         "de cantar bêbado no Arraiá da Favela, grande evento de Itapina!",
@@ -91,7 +115,12 @@
         "de preservar o patrimônio público!",
         "de gritar com o estagiário.",
         "de pagar as contas da prefeitura!",
-        "de atravessar o Rio Doce de balsa. Coisa que só em Itapina tem!"
+        "de atravessar o Rio Doce de balsa. Coisa que só em Itapina tem!",
+        "de amor!",
+        "de promover minha campanha!",
+        "de programar em Python.",
+        "de comprar um vinho!",
+        "de comer um brigadeiro!"
     ],
     "respostas": [
         "Difícil ser uma batata em um mundo de humanos.",
@@ -184,6 +213,9 @@
         "Esses momentos, só jesus na causa",
         "Mano, a terra não é plana, ta okey",
         "Tá okey, pacificamente, viu?",
-        "Não sei, pergunta para o @matekrause"
+        "Não sei, pergunta para o @matekrause",
+        "Vai ver se eu tô na esquina",
+        "***",
+        "Vou pagar sua passagem pra longe depois dessa"
     ]
 }
