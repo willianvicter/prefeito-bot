@@ -172,8 +172,8 @@ function tweetEvent(eventMsg) {
         "mencaoElogiosa"
     ];
     let chances = [
-        95,
-        5
+        1,
+        99
     ];
 
     let sorteio = [];
