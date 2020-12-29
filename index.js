@@ -148,9 +148,10 @@ function postRespostaSimples(eventMsg) {
     let params = {
         status: replyText,
         in_reply_to_status_id: id,
-        lat: -19.534181234087324,
-        long: -40.81335561845036
+        lat: -19.53290953884859,
+        long: -40.817264900673656
     }
+
     bot.post('statuses/update', params, tweeted);
 
     // Confirma se tudo está funcionando!

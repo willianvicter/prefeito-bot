@@ -1,9 +1,13 @@
 const fs = require('fs');
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage, registerFont } = require('canvas');
 
 let generate = {};
 
 generate.mencaoElogiosa = async function(user_data) {
+
+    // Registrar fonte customizada
+    registerFont('./fonts/Lato-Regular.tff', { family: 'Lato' });
+    registerFont('./fonts/Lato-Bold.ttf', { family: 'Lato', weight: 'bold' });
 
     let user = user_data.screen_name;
     let user_img = user_data.profile_image_url_https;
@@ -69,7 +73,7 @@ generate.mencaoElogiosa = async function(user_data) {
         "agosto",
         "setembro",
         "outubro",
-        "novembr",
+        "novembro",
         "dezembro"
     ];
 
