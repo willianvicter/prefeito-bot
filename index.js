@@ -7,11 +7,15 @@ require('dotenv').config();
 var schedule = require('node-schedule');
 const fs = require('fs');
 
-// Importa os arquivos com as frases
+// Importa códigos específicos
 const frases = require("./frases.json");
-
-// Importa arquivo com funções
+const dialogflow = require("./src/dialogflow.js");
+const logfile = require("./src/utils/log.js");
 const image = require('./image-generation.js');
+
+// Criação de objetos especiais
+let dialog = new dialogflow.DialogFlow();
+let dialoglog = new logfile.LogFile("dialogflow_log");
 
 // Criação do objeto com as keys.
 var bot = new Twit({
@@ -46,6 +50,13 @@ function twittar() {
         console.log("Saudação apresentada: " + getSaudacao());
         console.log(error);
     }
+}
+
+// Função conversa com log do DialogFlow
+async function conversa(query) {
+    let answer = await dialog.sendDialog(query);
+    dialoglog.pushLog(answer);
+    return answer;
 }
 
 // Função que verifica o horário do dia para saudar as pessoas.
