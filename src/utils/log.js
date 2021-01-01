@@ -80,7 +80,7 @@ class LogFile {
             // Add new data on the obj
             obj.push(data);
             // Convert it back to json
-            let json = JSON.stringify(obj);
+            let json = JSON.stringify(obj, null, 2);
             //Write it back on the file
             fs.writeFile(this.path, json, 'utf8', (err) => {
                 if (err) console.log(`Error writing file: ${err}`);
