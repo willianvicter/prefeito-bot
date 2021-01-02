@@ -1,5 +1,5 @@
 // Nome de usuário do perfil
-let usuario = 'pref_itapina'
+const usuario = 'krausebot';
 
 // Importação da biblioteca.
 let Twit = require('twit');
@@ -11,7 +11,7 @@ const fs = require('fs');
 const frases = require("./frases.json");
 const dialogflow = require("./src/dialogflow.js");
 const logfile = require("./src/utils/log.js");
-const image = require('./image-generation.js');
+const image = require("./src/img_canvas.js");
 
 // Criação de objetos especiais
 let dialog = new dialogflow.DialogFlow();
@@ -109,7 +109,7 @@ function postMencaoElogiosa(eventMsg) {
         await image.generate.mencaoElogiosa(data);
 
         // após a imagem gerada, lê do arquivo
-        let b64content = fs.readFileSync('output-img/output.png', { encoding: 'base64' });
+        let b64content = fs.readFileSync('images/output/mencao_elogiosa.png', { encoding: 'base64' });
 
         // faz o upload e posta com a legenda
         bot.post('media/upload', { media_data: b64content }, (err, data, response) => {
@@ -184,8 +184,8 @@ function tweetEvent(eventMsg) {
         "mencaoElogiosa"
     ];
     let chances = [
-        95,
-        5
+        5,
+        95
     ];
 
     let sorteio = [];
@@ -204,11 +204,11 @@ function tweetEvent(eventMsg) {
 }
 
 // Aqui começa tudo
-let rule = new schedule.RecurrenceRule();
+// let rule = new schedule.RecurrenceRule();
 
-rule.hour = [3, 6, 9, 12, 15, 18, 21, 24];
-rule.minute = 0;
+// rule.hour = [3, 6, 9, 12, 15, 18, 21, 24];
+// rule.minute = 0;
 
-let event = schedule.scheduleJob(rule, function() {
-    twittar();
-})
+// let event = schedule.scheduleJob(rule, function() {
+//     twittar();
+// })
