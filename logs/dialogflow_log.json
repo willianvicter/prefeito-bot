@@ -10,5 +10,65 @@
     "question": "Como estão as obras?",
     "answer": "As obras estão indo bem! Claro, nada como um pequeno atraso!",
     "intent": "situacao-obras"
+  },
+  {
+    "date": "4-1-2021 21:7:7",
+    "question": "asudhuaisd",
+    "answer": "Não consegui compreender, desculpe.",
+    "intent": "Default Fallback Intent"
+  },
+  {
+    "date": "4-1-2021 21:8:53",
+    "question": "asudhuaisd",
+    "answer": "Não consegui compreender, desculpe.",
+    "intent": "Default Fallback Intent"
+  },
+  {
+    "date": "5-1-2021 0:15:41",
+    "question": "asudhuaisd",
+    "answer": "Lamento, mas não compreendi.",
+    "intent": "Default Fallback Intent"
+  },
+  {
+    "date": "5-1-2021 0:16:53",
+    "question": "asudhuaisd",
+    "answer": "Não consegui compreender, desculpe.",
+    "intent": "Default Fallback Intent"
+  },
+  {
+    "date": "5-1-2021 0:20:6",
+    "question": "como estão as obras?",
+    "answer": "Queremos deixar a cidade o mais eficiente possível para você",
+    "intent": "situacao-obras"
+  },
+  {
+    "date": "5-1-2021 0:22:41",
+    "question": "quem é você?",
+    "answer": "Sou o Prefeito de Itapina!",
+    "intent": "quem-sou-eu"
+  },
+  {
+    "date": "5-1-2021 0:25:11",
+    "question": "você escuta ademir galeno?",
+    "answer": "Não acredito! Ouço Ademir Galeno todo dia!",
+    "intent": "opiniao-musica"
+  },
+  {
+    "date": "5-1-2021 0:26:11",
+    "question": "o que você acha da rosa?",
+    "answer": "rosa é interessante.",
+    "intent": "opiniao-geral"
+  },
+  {
+    "date": "5-1-2021 0:26:47",
+    "question": "é verdade que a rosa escuta calypso?",
+    "answer": "Você não vai acreditar! rosa e Banda Calypso nasceram um para o outro!",
+    "intent": "opiniao-musica"
+  },
+  {
+    "date": "5-1-2021 0:31:23",
+    "question": " mamão melancia abóbora gengibre",
+    "answer": "Desculpe, mas não compreendi.",
+    "intent": "Default Fallback Intent"
   }
 ]

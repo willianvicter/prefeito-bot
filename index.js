@@ -136,6 +136,43 @@ function postMencaoElogiosa(eventMsg) {
 
 }
 
+function postRespostaTexto(eventMsg, answer) {
+
+    // Para quem mandar o tweet?
+    var name = eventMsg.user.screen_name;
+
+    // A thread da conversa
+    var id = eventMsg.id_str;
+
+    console.log('tweet recebido de outra conta: ', name);
+
+    // Adicina a menção
+    var replyText = '@' + name + ' ';
+
+    // Adicina a saudação com o user e o texto
+    replyText += name + ", " + answer;
+
+    // Faz o tweet
+    let params = {
+        status: replyText,
+        in_reply_to_status_id: id,
+        lat: -19.53290953884859,
+        long: -40.817264900673656
+    }
+
+    bot.post('statuses/update', params, tweeted);
+
+    // Confirma se tudo está funcionando!
+    function tweeted(err, reply) {
+        if (err) {
+            console.log(err.message);
+        } else {
+            console.log('Tweeted: ' + reply.text);
+        }
+    }
+
+}
+
 function postRespostaSimples(eventMsg) {
 
     // Para quem mandar o tweet?
@@ -174,30 +211,45 @@ function postRespostaSimples(eventMsg) {
 }
 
 // Lida com o evento de marcação
-function tweetEvent(eventMsg) {
+async function tweetEvent(eventMsg) {
 
-    let situacao = [
-        "simples",
-        "mencaoElogiosa"
-    ];
-    let chances = [
-        95,
-        5
-    ];
+    let query = eventMsg.text;
 
-    let sorteio = [];
+    // Se livrar da @ menção
+    query = query.replace(/@krausebot/g, '');
 
-    for (let i = 0; i < chances.length; i++) {
-        for (let j = 0; j < chances[i]; j++) {
-            sorteio.push(situacao[i]);
+    let dialog = await conversa(query);
+
+    // Se cair em algo que o dialogflow não sabe, uma frase genérica
+    if (dialog.intent != "Default Fallback Intent") {
+
+        postRespostaTexto(eventMsg, dialog.answer);
+
+    } else {
+
+        let situacao = [
+            "simples",
+            "mencaoElogiosa"
+        ];
+        let chances = [
+            95,
+            5
+        ];
+
+        let sorteio = [];
+
+        for (let i = 0; i < chances.length; i++) {
+            for (let j = 0; j < chances[i]; j++) {
+                sorteio.push(situacao[i]);
+            }
         }
+
+        let sorteado = sorteio[Math.floor(Math.random() * sorteio.length)];
+
+        if (sorteado == "simples") postRespostaSimples(eventMsg);
+        else if (sorteado == "mencaoElogiosa") postMencaoElogiosa(eventMsg);
+
     }
-
-    let sorteado = sorteio[Math.floor(Math.random() * sorteio.length)];
-
-    if (sorteado == "simples") postRespostaSimples(eventMsg);
-    else if (sorteado == "mencaoElogiosa") postMencaoElogiosa(eventMsg);
-
 }
 
 // Aqui começa tudo
