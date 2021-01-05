@@ -214,9 +214,10 @@ function postRespostaSimples(eventMsg) {
 async function tweetEvent(eventMsg) {
 
     let query = eventMsg.text;
+    let regex = '/@' + process.env.USUARIO + '/g';
 
     // Se livrar da @ menção
-    query = query.replace(/@krausebot/g, '');
+    query = query.replace(regex, '');
 
     let dialog = await conversa(query);
 

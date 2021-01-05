@@ -12,24 +12,6 @@
     "intent": "situacao-obras"
   },
   {
-    "date": "4-1-2021 21:7:7",
-    "question": "asudhuaisd",
-    "answer": "Não consegui compreender, desculpe.",
-    "intent": "Default Fallback Intent"
-  },
-  {
-    "date": "4-1-2021 21:8:53",
-    "question": "asudhuaisd",
-    "answer": "Não consegui compreender, desculpe.",
-    "intent": "Default Fallback Intent"
-  },
-  {
-    "date": "5-1-2021 0:15:41",
-    "question": "asudhuaisd",
-    "answer": "Lamento, mas não compreendi.",
-    "intent": "Default Fallback Intent"
-  },
-  {
     "date": "5-1-2021 0:16:53",
     "question": "asudhuaisd",
     "answer": "Não consegui compreender, desculpe.",
@@ -70,5 +52,11 @@
     "question": " mamão melancia abóbora gengibre",
     "answer": "Desculpe, mas não compreendi.",
     "intent": "Default Fallback Intent"
+  },
+  {
+    "date": "5-1-2021 0:37:25",
+    "question": "@krausebot ja escutou pagode?",
+    "answer": "Você não vai acreditar! Adoro pagode!",
+    "intent": "opiniao-musica"
   }
 ]
