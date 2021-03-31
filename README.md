@@ -23,6 +23,16 @@ Execute com:
 
 `node index.js`
 
+## Sobre a integração com o Dialogflow
+
+Para funcionar corretamente, deverá existir um projeto configurado no [Dialogflow](dialogflow.cloud.google.com) e as chaves de acesso estarem no arquivo `.env`.
+
+Por padrão, ao baixar as chaves, o arquivo será único. Para poder atualizar e inserir os campos necessários, deve-se extrair do documento as informações necessárias de acordo com o `.env-example`.
+
+## Respostas com Imagem
+
+O Bot está configurado de maneira que, se não houver resposta pré configurada no Dialogflow, haverá a chance de tuitar uma imagem com um "certificado" com a foto do usuário. A configuração da imagem está localizada em `src/img_canvas.js`.
+
 ## Sugerir frases
 
 Atualmente, ainda não temos um formulário para envio de sugestões, mas você pode

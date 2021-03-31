@@ -58,5 +58,41 @@
     "question": "@krausebot ja escutou pagode?",
     "answer": "Você não vai acreditar! Adoro pagode!",
     "intent": "opiniao-musica"
+  },
+  {
+    "date": "4-3-2021 22:50:43",
+    "question": "@krausebot o que você acha da Joelma?",
+    "answer": "",
+    "intent": "opiniao-geral"
+  },
+  {
+    "date": "4-3-2021 22:52:34",
+    "question": "@krausebot onde você mora?",
+    "answer": "Itapina",
+    "intent": "local-preferencia"
+  },
+  {
+    "date": "4-3-2021 22:53:7",
+    "question": "@krausebot Você escuta Calypso?",
+    "answer": "Não acredito! Ouço Banda Calypso todo dia!",
+    "intent": "opiniao-musica"
+  },
+  {
+    "date": "31-3-2021 17:38:20",
+    "question": "@krausebot qual seu nome?",
+    "answer": "Prefeito de Itapina, o governante!",
+    "intent": "quem-sou-eu"
+  },
+  {
+    "date": "31-3-2021 17:38:58",
+    "question": "@krausebot que estilo musical você escuta?",
+    "answer": "Não pode ser! Estou escutando teatro musical agora!",
+    "intent": "opiniao-musica"
+  },
+  {
+    "date": "31-3-2021 17:40:35",
+    "question": "@krausebot você escuta pop?",
+    "answer": "Não pode ser! Adoro pop!",
+    "intent": "opiniao-musica"
   }
 ]
