@@ -1,18 +1,17 @@
+// Nome de usuário do perfil
+let usuario = 'pref_itapina'
+
 // Importação da biblioteca.
 let Twit = require('twit');
 require('dotenv').config();
 var schedule = require('node-schedule');
 const fs = require('fs');
 
-// Importa códigos específicos
+// Importa os arquivos com as frases
 const frases = require("./frases.json");
-const dialogflow = require("./src/dialogflow.js");
-const logfile = require("./src/utils/log.js");
-const image = require("./src/img_canvas.js");
 
-// Criação de objetos especiais
-let dialog = new dialogflow.DialogFlow();
-let dialoglog = new logfile.LogFile("dialogflow_log");
+// Importa arquivo com funções
+const image = require('./image-generation.js');
 
 // Criação do objeto com as keys.
 var bot = new Twit({
@@ -23,7 +22,7 @@ var bot = new Twit({
 });
 
 // Configura a Stream e chama a função tweetEvent() quando mencionado
-var stream = bot.stream('statuses/filter', { track: '@' + process.env.USUARIO });
+var stream = bot.stream('statuses/filter', { track: '@' + usuario });
 stream.on('tweet', tweetEvent);
 
 //Criação do tweet
@@ -47,13 +46,6 @@ function twittar() {
         console.log("Saudação apresentada: " + getSaudacao());
         console.log(error);
     }
-}
-
-// Função conversa com log do DialogFlow
-async function conversa(query) {
-    let answer = await dialog.sendDialog(query);
-    dialoglog.pushLog(answer);
-    return answer;
 }
 
 // Função que verifica o horário do dia para saudar as pessoas.
@@ -106,7 +98,7 @@ function postMencaoElogiosa(eventMsg) {
         await image.generate.mencaoElogiosa(data);
 
         // após a imagem gerada, lê do arquivo
-        let b64content = fs.readFileSync('images/output/mencao_elogiosa.png', { encoding: 'base64' });
+        let b64content = fs.readFileSync('output-img/output.png', { encoding: 'base64' });
 
         // faz o upload e posta com a legenda
         bot.post('media/upload', { media_data: b64content }, (err, data, response) => {
@@ -132,43 +124,6 @@ function postMencaoElogiosa(eventMsg) {
 
         });
 
-    }
-
-}
-
-function postRespostaTexto(eventMsg, answer) {
-
-    // Para quem mandar o tweet?
-    var name = eventMsg.user.screen_name;
-
-    // A thread da conversa
-    var id = eventMsg.id_str;
-
-    console.log('tweet recebido de outra conta: ', name);
-
-    // Adicina a menção
-    var replyText = '@' + name + ' ';
-
-    // Adicina a saudação com o user e o texto
-    replyText += name + ", " + answer;
-
-    // Faz o tweet
-    let params = {
-        status: replyText,
-        in_reply_to_status_id: id,
-        lat: -19.53290953884859,
-        long: -40.817264900673656
-    }
-
-    bot.post('statuses/update', params, tweeted);
-
-    // Confirma se tudo está funcionando!
-    function tweeted(err, reply) {
-        if (err) {
-            console.log(err.message);
-        } else {
-            console.log('Tweeted: ' + reply.text);
-        }
     }
 
 }
@@ -211,46 +166,30 @@ function postRespostaSimples(eventMsg) {
 }
 
 // Lida com o evento de marcação
-async function tweetEvent(eventMsg) {
+function tweetEvent(eventMsg) {
 
-    let query = eventMsg.text;
-    let regex = '/@' + process.env.USUARIO + '/g';
+    let situacao = [
+        "simples",
+        "mencaoElogiosa"
+    ];
+    let chances = [
+        95,
+        5
+    ];
 
-    // Se livrar da @ menção
-    query = query.replace(regex, '');
+    let sorteio = [];
 
-    let dialog = await conversa(query);
-
-    // Se cair em algo que o dialogflow não sabe, uma frase genérica
-    if (dialog.intent != "Default Fallback Intent") {
-
-        postRespostaTexto(eventMsg, dialog.answer);
-
-    } else {
-
-        let situacao = [
-            "simples",
-            "mencaoElogiosa"
-        ];
-        let chances = [
-            95,
-            5
-        ];
-
-        let sorteio = [];
-
-        for (let i = 0; i < chances.length; i++) {
-            for (let j = 0; j < chances[i]; j++) {
-                sorteio.push(situacao[i]);
-            }
+    for (let i = 0; i < chances.length; i++) {
+        for (let j = 0; j < chances[i]; j++) {
+            sorteio.push(situacao[i]);
         }
-
-        let sorteado = sorteio[Math.floor(Math.random() * sorteio.length)];
-
-        if (sorteado == "simples") postRespostaSimples(eventMsg);
-        else if (sorteado == "mencaoElogiosa") postMencaoElogiosa(eventMsg);
-
     }
+
+    let sorteado = sorteio[Math.floor(Math.random() * sorteio.length)];
+
+    if (sorteado == "simples") postRespostaSimples(eventMsg);
+    else if (sorteado == "mencaoElogiosa") postMencaoElogiosa(eventMsg);
+
 }
 
 // Aqui começa tudo
