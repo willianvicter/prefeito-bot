@@ -81,7 +81,7 @@ generate.mencaoElogiosa = async function(user_data) {
 
     // cria o buffer e grava a imagem
     const buffer = canvas.toBuffer('image/png');
-    fs.writeFileSync('./output-img/output.png', buffer);
+    fs.writeFileSync('./images/output/mencao_elogiosa.png', buffer);
 
 };
 
