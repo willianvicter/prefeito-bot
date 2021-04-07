@@ -29,7 +29,7 @@ Para funcionar corretamente, deverá existir um projeto configurado no [Dialogfl
 
 Por padrão, ao baixar as chaves, o arquivo será único. Para poder atualizar e inserir os campos necessários, deve-se extrair do documento as informações necessárias de acordo com o `.env-example`. A chave com valor "private key" deve possuir aspas, já o "client email" não.
 
-Importante: por limitaçõs do Heroku, atualmente deve-se transformar as chaves em base64. Há um utilitario de encode em `src/utils/encode_b64.js`
+Importante: por limitaçõs do Heroku, atualmente deve-se transformar as chaves em hex. Há um utilitario de encode em `src/utils/encode_hex.js`
 
 No arquivo env de exemplo há instruções.
 
