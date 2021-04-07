@@ -10,7 +10,7 @@ const readline = require('readline').createInterface({
 })
 
 readline.question(`Insert string to enconde: `, string => {
-    console.log("\nEncoded string: " + Buffer.from(string).toString('base64'));
+    console.log("\nEncoded string: " + Buffer.from(string).toString('hex'));
     readline.close()
 })
 

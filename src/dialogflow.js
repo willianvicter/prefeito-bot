@@ -11,8 +11,8 @@ class DialogFlow {
     constructor(projectId = "prefeito-itapina-pwab") {
         this.projectId = projectId;
 
-        let dialogflow_private_key = Buffer.from(process.env.DIALOGFLOW_PRIVATE_KEY, 'base64').toString();
-        let dialogflow_client_email = Buffer.from(process.env.DIALOGFLOW_CLIENT_EMAIL, 'base64').toString();
+        let dialogflow_private_key = Buffer.from(process.env.DIALOGFLOW_PRIVATE_KEY, 'hex').toString();
+        let dialogflow_client_email = Buffer.from(process.env.DIALOGFLOW_CLIENT_EMAIL, 'hex').toString();
 
         let config = {
             credentials: {
