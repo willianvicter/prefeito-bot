@@ -11,12 +11,13 @@ class DialogFlow {
     constructor(projectId = "prefeito-itapina-pwab") {
         this.projectId = projectId;
 
-        let privateKey = (process.env.NODE_ENV == "production") ? JSON.parse(process.env.DIALOGFLOW_PRIVATE_KEY) : process.env.DIALOGFLOW_PRIVATE_KEY
-        let clientEmail = process.env.DIALOGFLOW_CLIENT_EMAIL;
+        let dialogflow_private_key = Buffer.from(process.env.DIALOGFLOW_PRIVATE_KEY, 'base64').toString();
+        let dialogflow_client_email = Buffer.from(process.env.DIALOGFLOW_CLIENT_EMAIL, 'base64').toString();
+
         let config = {
             credentials: {
-                private_key: privateKey,
-                client_email: clientEmail
+                private_key: JSON.parse(dialogflow_private_key),
+                client_email: dialogflow_client_email
             }
         }
 

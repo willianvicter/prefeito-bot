@@ -27,7 +27,11 @@ Execute com:
 
 Para funcionar corretamente, deverá existir um projeto configurado no [Dialogflow](dialogflow.cloud.google.com) e as chaves de acesso estarem no arquivo `.env`.
 
-Por padrão, ao baixar as chaves, o arquivo será único. Para poder atualizar e inserir os campos necessários, deve-se extrair do documento as informações necessárias de acordo com o `.env-example`.
+Por padrão, ao baixar as chaves, o arquivo será único. Para poder atualizar e inserir os campos necessários, deve-se extrair do documento as informações necessárias de acordo com o `.env-example`. A chave com valor "private key" deve possuir aspas, já o "client email" não.
+
+Importante: por limitaçõs do Heroku, atualmente deve-se transformar as chaves em base64. Há um utilitario de encode em `src/utils/encode64.js`
+
+No arquivo env de exemplo há instruções.
 
 ## Respostas com Imagem
 
