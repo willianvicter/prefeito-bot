@@ -256,7 +256,7 @@ async function tweetEvent(eventMsg) {
 // Aqui começa tudo
 let rule = new schedule.RecurrenceRule();
 
-rule.hour = [3, 6, 9, 12, 15, 18, 21, 24];
+rule.hour = [9, 15, 21];
 rule.minute = 0;
 
 let event = schedule.scheduleJob(rule, function() {
